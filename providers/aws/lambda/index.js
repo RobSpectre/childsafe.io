@@ -1,8 +1,9 @@
 'use strict'
 
-const request = require('request')
+const http = require('http')
+const querystring = require('querystring')
 
-const CHILD_SAFE_URL = process.env.CHILD_SAFE_URL
+// const CHILD_SAFE_URL = process.env.CHILD_SAFE_URL
 
 exports.handler = (event, context, callback) => {
   const promises = event.Records.map(record => {
@@ -12,19 +13,36 @@ exports.handler = (event, context, callback) => {
       const resource_id = `${record.s3.bucket.arn}/${key}`
       const url = `https://s3.amazonaws.com/${bucket}/${key}`
 
-      request.post(
-        CHILD_SAFE_URL,
-        { form: { url, resource_id } },
-        (err, res, body) => {
-          if (err) {
-            return reject(err)
-          }
-          if (res.statusCode !== 201) {
-            return reject(body)
-          }
-          resolve()
+      const postData = querystring.stringify({ url, resource_id })
+
+      const options = {
+        hostname: 'tunnel.brooklynhacker.com',
+        path: '/receive/media/',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Length': postData.length
         }
-      )
+      }
+
+      const req = http.request(options, res => {
+        let body = ''
+
+        if (res.statusCode !== 201) {
+          return reject(new Error(`status code: ${res.statusCode}`))
+        }
+
+        res.on('error', err => reject(err))
+
+        res.on('data', chunk => {
+          body += chunk
+        })
+
+        res.on('end', () => resolve(body))
+      })
+
+      req.write(postData)
+      req.end()
     })
   })
 

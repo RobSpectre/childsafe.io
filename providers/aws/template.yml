@@ -1,0 +1,27 @@
+AWSTemplateFormatVersion: 2010-09-09
+Transform: AWS::Serverless-2016-10-31
+Description: A Lambda function to look for missing children in uploads to an S3 bucket
+
+Parameters:
+  Bucket:
+    Type: String
+    Description: "The S3 Bucket you want to enable the lambda for"
+  ChildSafeUrl:
+    Type: String
+    Description: "The inbound url for ChildSafe.io"
+
+Resources:
+  HitWebHookFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.handler
+      Policies: AmazonS3ReadOnlyAccess
+      Runtime: node6
+      CodeURI: https://s3.amazonaws.com/vhs.eddiezane.com/lambda.zip
+      Events:
+        PhotoUpload:
+          Type: S3
+          Properties:
+            Bucket: !Sub "arn:aws:s3:::${Bucket}"
+            Events: s3:ObjectCreated:*
+
