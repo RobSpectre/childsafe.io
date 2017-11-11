@@ -13,11 +13,10 @@ local_settings.py
 build/
 docs/build/
 dist/
-garfield/static/*
-garfield/db.*
+childsafe/static/*
+childsafe/db.*
 node_modules
 local.py
-static/
 *.sqlite3
 **.cache**
 .tox/

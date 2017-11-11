@@ -1,0 +1,352 @@
+{# Settings #}
+{% set root = "../../" %}
+{% set mainNavActive_1 = "shortcodes" %}
+{% set sidebarNavActive_1 = "shortcode-base-media-videos" %}
+{% set title = "Media Videos | " %}
+
+{% include "html/assets/include/nunjucks/partials/head.njk" %}
+{% include "html/assets/include/nunjucks/partials/core-fonts.njk" %}
+{% include "html/assets/include/nunjucks/partials/core-css.njk" %}
+<link rel="stylesheet" href="{{ root }}assets/vendor/bootstrap/offcanvas.css">
+{% include "html/assets/include/nunjucks/partials/core-icons.njk" %}
+<link rel="stylesheet" href="{{ root }}assets/vendor/animate.css">
+<link rel="stylesheet" href="{{ root }}assets/vendor/jquery-ui/themes/base/jquery-ui.min.css">
+<link rel="stylesheet" href="{{ root }}assets/vendor/hs-megamenu/src/hs.megamenu.css">
+<link rel="stylesheet" href="{{ root }}assets/vendor/hamburgers/hamburgers.min.css">
+
+{% include "html/assets/include/nunjucks/partials/css/css-showcode.njk" %}
+
+{% include "html/assets/include/nunjucks/partials/css/css-unify.njk" %}
+{% include "html/assets/include/nunjucks/partials/css/css-custom.njk" %}
+</head>
+
+<body>
+  <main>
+    {% include "html/assets/include/nunjucks/partials/blocks/headers/header-main-fullwidth.njk" %}
+
+    <section class="container-fluid">
+      <div class="row row-offcanvas row-offcanvas-left">
+        <div class="col-auto sidebar-offcanvas u-sidebar-navigation g-bg-secondary g-px-0 g-py-20">
+          {% include "html/assets/include/nunjucks/partials/blocks/sidebars/sidebar-local-search.njk" %}
+        </div>
+
+        <div class="col g-py-30 g-pa-30--md">
+          <div class="g-hidden-md-up">
+            <button type="button" class="btn btn-primary btn-sm"
+                    data-toggle="offcanvas">Toggle shocrtcode nav
+            </button>
+          </div>
+
+          <!-- Aspect Ratios -->
+          <section class="g-pt-30">
+            <h1 class="g-font-weight-300 g-letter-spacing-1 g-mb-35">Media Videos</h1>
+            <div class="container">
+              <!-- Heading -->
+              <header class="g-mb-80">
+                <div class="u-heading-v6-2 text-uppercase">
+                  <h2 class="h4 u-heading-v6__title g-font-weight-300">Responsive Video Examples</h2>
+                </div>
+                <div class="g-pl-90">
+                  <p>You may use Vimoe, Youtube, Facebook and HTML5 videos by using resonsive aspect ratio utility classes. In these examples, we use Aspect ratio (16:9) by default using the following classes
+                    <code>.embed-responsive</code> and <code>.embed-responsive-16by9</code></p>
+                </div>
+              </header>
+              <!-- End Heading -->
+
+              <!-- HTML5 Example -->
+              <div class="row">
+                <div class="col-md-3">
+                  <h3 class="h4 g-font-weight-300">HTML5 example</h3>
+                </div>
+                <div class="col-md-9">
+                  <div id="shortcode1">
+                    <div class="shortcode-html">
+                      <!-- HTML5 Example -->
+                      <div class="embed-responsive embed-responsive-16by9 g-mb-60">
+                        <video preload="auto" controls="controls" poster="{{ root }}assets/media-temp/video-bg/video-bg-poster.jpg">
+                          <source src="{{ root }}assets/media-temp/video-bg/video-bg.webm" type="video/webm;">
+                          <source src="{{ root }}assets/media-temp/video-bg/video-bg.mp4" type="video/mp4;">
+                        </video>
+                      </div>
+                      <!-- End HTML5 Example -->
+                    </div>
+                  </div>
+
+                  {% set contentTarget = "#shortcode1" %}
+                  {% set modalID = "#modalMarkup" %}
+                  {% include "html/assets/include/nunjucks/partials/blocks/show-code.njk" %}
+                </div>
+              </div>
+              <!-- End HTML5 Example -->
+
+              <hr class="g-brd-gray-light-v4 g-my-50">
+
+              <!-- Vimeo Example -->
+              <div class="row">
+                <div class="col-md-3">
+                  <h3 class="h4 g-font-weight-300">Vimeo example</h3>
+                </div>
+                <div class="col-md-9">
+                  <div id="shortcode2">
+                    <div class="shortcode-html">
+                      <!-- Vimeo Example -->
+                      <div class="embed-responsive embed-responsive-16by9 g-mb-30">
+                        <iframe src="//player.vimeo.com/video/47911018" width="530" height="300" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+                      </div>
+                      <!-- End Vimeo Example -->
+                    </div>
+                  </div>
+
+                  {% set contentTarget = "#shortcode2" %}
+                  {% set modalID = "#modalMarkup" %}
+                  {% include "html/assets/include/nunjucks/partials/blocks/show-code.njk" %}
+                </div>
+              </div>
+              <!-- End Vimeo Example -->
+
+              <hr class="g-brd-gray-light-v4 g-my-50">
+
+              <!-- Youtube Example -->
+              <div class="row">
+                <div class="col-md-3">
+                  <h3 class="h4 g-font-weight-300">Youtube example</h3>
+                </div>
+                <div class="col-md-9">
+                  <div id="shortcode3">
+                    <div class="shortcode-html">
+                      <!-- Youtube Example -->
+                      <div class="embed-responsive embed-responsive-16by9 g-mb-30">
+                        <iframe width="100%" src="//www.youtube.com/embed/Squv4KI751w" frameborder="0" allowfullscreen></iframe>
+                      </div>
+                      <!-- End Youtube Example -->
+                    </div>
+                  </div>
+
+                  {% set contentTarget = "#shortcode3" %}
+                  {% set modalID = "#modalMarkup" %}
+                  {% include "html/assets/include/nunjucks/partials/blocks/show-code.njk" %}
+                </div>
+              </div>
+              <!-- End Youtube Example -->
+
+              <hr class="g-brd-gray-light-v4 g-my-50">
+
+              <!-- Facebook Example -->
+              <div class="row">
+                <div class="col-md-3">
+                  <h3 class="h4 g-font-weight-300">Facebook example</h3>
+                </div>
+                <div class="col-md-9">
+                  <div id="shortcode4">
+                    <div class="shortcode-html">
+                      <!-- Facebook Example -->
+                      <div class="embed-responsive embed-responsive-16by9 g-mb-60">
+                        <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FSpaceX%2Fvideos%2Fvb.353851465130%2F10156509755310131%2F%3Ftype%3D3&show_text=0&width=560" width="560" height="315" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+                      </div>
+                      <!-- End Facebook Example -->
+                    </div>
+                  </div>
+
+                  {% set contentTarget = "#shortcode4" %}
+                  {% set modalID = "#modalMarkup" %}
+                  {% include "html/assets/include/nunjucks/partials/blocks/show-code.njk" %}
+                </div>
+              </div>
+              <!-- End Facebook Example -->
+            </div>
+          </section>
+          <!-- End Aspect Ratios -->
+
+          <hr class="g-brd-gray-light-v4 my-0">
+
+          <!-- Aspect Ratios -->
+          <section class="g-py-100">
+            <div class="container">
+              <!-- Heading -->
+              <header class="g-mb-80">
+                <div class="u-heading-v6-2 text-uppercase">
+                  <h2 class="h4 u-heading-v6__title g-font-weight-300">Responsive Aspect Ratios</h2>
+                </div>
+                <div class="g-pl-90">
+                  <p>Allow browsers to determine video or slideshow dimensions based on the width of their containing block by creating an intrinsic ratio that will properly scale on any device by using
+                    <code>.embed-responsive</code> and <code>.embed-responsive-*</code> classes, <code>*</code> can be
+                    <code>21by9</code>, <code>16by9</code>, <code>4by3</code> and
+                    <code>1by1</code>. For more details, please check out
+                    <a href="#">Bootstrap Responsive embeds</a>
+                    page. All examples by default uses <strong>Vimeo embed vidoes</strong>.
+                  </p>
+                </div>
+              </header>
+              <!-- End Heading -->
+
+              <!-- Aspect Ratio (16:9) -->
+              <div class="row">
+                <div class="col-md-3">
+                  <h3 class="h4 g-font-weight-300">Aspect ratio (16:9)</h3>
+                  <p>Use a class <code class="text-nowrap">embed-responsive-16by9</code> for aspect ratio (16:9)</p>
+                </div>
+                <div class="col-md-9">
+                  <div id="shortcode5">
+                    <div class="shortcode-html">
+                      <!-- Aspect Ratio (16:9) -->
+                      <div class="embed-responsive embed-responsive-16by9 g-mb-30">
+                        <iframe src="//player.vimeo.com/video/47911018" width="530" height="300" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+                      </div>
+                      <!-- End Aspect Ratio (16:9) -->
+                    </div>
+                  </div>
+
+                  {% set contentTarget = "#shortcode5" %}
+                  {% set modalID = "#modalMarkup" %}
+                  {% include "html/assets/include/nunjucks/partials/blocks/show-code.njk" %}
+                </div>
+              </div>
+              <!-- End Aspect Ratio (16:9) -->
+
+              <hr class="g-brd-gray-light-v4 g-my-50">
+
+              <!-- Aspect Ratio (21:9) -->
+              <div class="row">
+                <div class="col-md-3">
+                  <h3 class="h4 g-font-weight-300">Aspect ratio (21:9)</h3>
+                  <p>Use a class <code class="text-nowrap">embed-responsive-21by9</code> for aspect ratio (21:9)</p>
+                </div>
+                <div class="col-md-9">
+                  <div id="shortcode6">
+                    <div class="shortcode-html">
+                      <!-- Aspect Ratio (21:9) -->
+                      <div class="embed-responsive embed-responsive-21by9 g-mb-30">
+                        <iframe src="//player.vimeo.com/video/47911018" width="530" height="300" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+                      </div>
+                      <!-- End Aspect Ratio (21:9) -->
+                    </div>
+                  </div>
+
+                  {% set contentTarget = "#shortcode6" %}
+                  {% set modalID = "#modalMarkup" %}
+                  {% include "html/assets/include/nunjucks/partials/blocks/show-code.njk" %}
+                </div>
+              </div>
+              <!-- End Aspect Ratio (21:9) -->
+
+              <hr class="g-brd-gray-light-v4 g-my-50">
+
+              <!-- Aspect Ratio (4:3) -->
+              <div class="row">
+                <div class="col-md-3">
+                  <h3 class="h4 g-font-weight-300">Aspect ratio (4:3)</h3>
+                  <p>Use a class <code class="text-nowrap">embed-responsive-4by3</code> for aspect ratio (4:3)</p>
+                </div>
+                <div class="col-md-9">
+                  <div id="shortcode7">
+                    <div class="shortcode-html">
+                      <!-- Aspect Ratio (4:3) -->
+                      <div class="embed-responsive embed-responsive-4by3 g-mb-30">
+                        <iframe src="//player.vimeo.com/video/47911018" width="530" height="300" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+                      </div>
+                      <!-- End Aspect Ratio (4:3) -->
+                    </div>
+                  </div>
+
+                  {% set contentTarget = "#shortcode7" %}
+                  {% set modalID = "#modalMarkup" %}
+                  {% include "html/assets/include/nunjucks/partials/blocks/show-code.njk" %}
+                </div>
+              </div>
+              <!-- End Aspect Ratio (4:3) -->
+
+              <hr class="g-brd-gray-light-v4 g-my-50">
+
+              <!-- Aspect Ratio (1:1) -->
+              <div class="row">
+                <div class="col-md-3">
+                  <h3 class="h4 g-font-weight-300">Aspect ratio (1:1)</h3>
+                  <p>Use a class <code class="text-nowrap">embed-responsive-1by1</code> for aspect ratio (1:1)</p>
+                </div>
+                <div class="col-md-9">
+                  <div id="shortcode8">
+                    <div class="shortcode-html">
+                      <!-- Aspect Ratio (1:1) -->
+                      <div class="embed-responsive embed-responsive-1by1 g-mb-30">
+                        <iframe src="//player.vimeo.com/video/47911018" width="530" height="300" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+                      </div>
+                      <!-- End Aspect Ratio (1:1) -->
+                    </div>
+                  </div>
+
+                  {% set contentTarget = "#shortcode8" %}
+                  {% set modalID = "#modalMarkup" %}
+                  {% include "html/assets/include/nunjucks/partials/blocks/show-code.njk" %}
+                </div>
+              </div>
+              <!-- End Aspect Ratio (1:1) -->
+            </div>
+          </section>
+          <!-- End Aspect Ratios -->
+        </div>
+      </div>
+    </section>
+
+    {% include "html/assets/include/nunjucks/partials/blocks/cta/cta-main.njk" %}
+
+    {% include "html/assets/include/nunjucks/partials/blocks/footers/footer-main.njk" %}
+    {% include "html/assets/include/nunjucks/partials/blocks/footers/copyright-footer-main.njk" %}
+    {% include "html/assets/include/nunjucks/partials/blocks/go-to-top/go-to-top-1.njk" %}
+  </main>
+
+  {% include "html/assets/include/nunjucks/partials/blocks/modals/modal-markup.njk" %}
+
+  {% include "html/assets/include/nunjucks/partials/core-js.njk" %}
+  <script src="{{ root }}assets/vendor/bootstrap/offcanvas.js"></script>
+
+  <!-- JS Implementing Plugins -->
+  <script src="{{ root }}assets/vendor/hs-megamenu/src/hs.megamenu.js"></script>
+
+  {% include "html/assets/include/nunjucks/partials/js/js-jquery-ui-core.njk" %}
+
+  <!-- jQuery UI Helpers -->
+  <script src="{{ root }}assets/vendor/jquery-ui/ui/widgets/menu.js"></script>
+  <script src="{{ root }}assets/vendor/jquery-ui/ui/widgets/mouse.js"></script>
+
+  <!-- jQuery UI Widgets -->
+  <script src="{{ root }}assets/vendor/jquery-ui/ui/widgets/autocomplete.js"></script>
+
+  <!-- JS Unify -->
+  <script src="{{ root }}assets/js/hs.core.js"></script>
+  <script src="{{ root }}assets/js/components/hs.header.js"></script>
+  <script src="{{ root }}assets/js/helpers/hs.hamburgers.js"></script>
+  <script src="{{ root }}assets/js/components/hs.autocomplete-local-search.js"></script>
+  <script src="{{ root }}assets/style-switcher/vendor/cookiejs/jquery.cookie.js"></script>
+  <script src="{{ root }}assets/js/helpers/hs.shortcode-filter.js"></script>
+  <script src="{{ root }}assets/js/components/hs.go-to.js"></script>
+
+  {% include "html/assets/include/nunjucks/partials/js/js-show-code.njk" %}
+
+  <!-- JS Custom -->
+  <script src="{{ root }}assets/js/custom.js"></script>
+
+  <!-- JS Plugins Init. -->
+  <script>
+    $(document).on('ready', function () {
+      // initialization of go to
+      $.HSCore.components.HSGoTo.init('.js-go-to');
+    });
+
+    $(window).on('load', function () {
+      // initialization of header
+      $.HSCore.components.HSHeader.init($('#js-header'));
+      $.HSCore.helpers.HSHamburgers.init('.hamburger');
+
+      // initialization of autocomplet
+      $.HSCore.components.HSLocalSearchAutocomplete.init('#autocomplete1');
+
+      // initialization of HSMegaMenu plugin
+      $('.js-mega-menu').HSMegaMenu({
+        event: 'hover',
+        pageContainer: $('.container'),
+        breakpoint: 991
+      });
+    });
+  </script>
+</body>
+</html>

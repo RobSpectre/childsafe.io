@@ -1,0 +1,102 @@
+{% load static %} 
+    <!-- JS Global Compulsory -->
+    <script src="{% static '/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static '/vendor/jquery-migrate/jquery-migrate.min.js' %}"></script>
+    <script src="{% static '/vendor/jquery.easing/js/jquery.easing.js' %}"></script>
+    <script src="{% static '/vendor/popper.min.js' %}"></script>
+    <script src="{% static '/vendor/bootstrap/bootstrap.min.js' %}"></script>
+
+    <!-- JS Implementing Plugins -->
+    <script src="{% static '/vendor/appear.js' %}"></script>
+    <script src="{% static '/vendor/dzsparallaxer/dzsparallaxer.js' %}"></script>
+    <script src="{% static '/vendor/dzsparallaxer/dzsscroller/scroller.js' %}"></script>
+    <script src="{% static '/vendor/dzsparallaxer/advancedscroller/plugin.js' %}"></script>
+    <script src="{% static '/vendor/fancybox/jquery.fancybox.js' %}"></script>
+    <script src="{% static '/vendor/cubeportfolio-full/cubeportfolio/js/jquery.cubeportfolio.min.js' %}"></script>
+    <script src="{% static '/vendor/slick-carousel/slick/slick.js' %}"></script>
+
+    <!-- JS Unify -->
+    <script src="{% static '/js/hs.core.js' %}"></script>
+    <script src="{% static '/js/components/hs.header.js' %}"></script>
+    <script src="{% static '/js/helpers/hs.hamburgers.js' %}"></script>
+    <script src="{% static '/js/components/hs.scroll-nav.js' %}"></script>
+    <script src="{% static '/js/components/hs.onscroll-animation.js' %}"></script>
+    <script src="{% static '/js/components/hs.tabs.js' %}"></script>
+    <script src="{% static '/js/components/hs.cubeportfolio.js' %}"></script>
+    <script src="{% static '/js/components/hs.popup.js' %}"></script>
+    <script src="{% static '/js/components/hs.carousel.js' %}"></script>
+    <script src="{% static '/js/components/hs.go-to.js' %}"></script>
+
+    <!-- JS Customization -->
+    <script src="{% static '/js/custom.js' %}"></script>
+
+    <!-- JS Plugins Init. -->
+    <script>
+      $(document).on('ready', function () {
+        // initialization of carousel
+        $.HSCore.components.HSCarousel.init('.js-carousel');
+
+        $('#carouselCus1').slick('setOption', 'responsive', [{
+          breakpoint: 1200,
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll: 3
+          }
+        }, {
+          breakpoint: 992,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 2
+          }
+        }, {
+          breakpoint: 576,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1
+          }
+        }], true);
+
+        // initialization of header
+        $.HSCore.components.HSHeader.init($('#js-header'));
+        $.HSCore.helpers.HSHamburgers.init('.hamburger');
+
+        // initialization of tabs
+        $.HSCore.components.HSTabs.init('[role="tablist"]');
+
+        // initialization of scroll animation
+        $.HSCore.components.HSOnScrollAnimation.init('[data-animation]');
+
+        // initialization of go to section
+        $.HSCore.components.HSGoTo.init('.js-go-to');
+
+        // initialization of popups
+        $.HSCore.components.HSPopup.init('.js-fancybox-media', {
+          helpers: {
+            media: {},
+            overlay: {
+              css: {
+                'background': 'rgba(255, 255, 255, .8)'
+              }
+            }
+          }
+        });
+      });
+
+      $(window).on('load', function() {
+        // initialization of HSScrollNav
+        $.HSCore.components.HSScrollNav.init($('#js-scroll-nav'), {
+          duration: 700,
+          easing: 'easeOutExpo'
+        });
+
+        // initialization of cubeportfolio
+        $.HSCore.components.HSCubeportfolio.init('.cbp');
+      });
+
+      $(window).on('resize', function () {
+        setTimeout(function () {
+          $.HSCore.components.HSTabs.init('[role="tablist"]');
+        }, 200);
+      });
+    </script>
+
