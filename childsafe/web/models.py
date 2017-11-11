@@ -16,8 +16,7 @@ class ChildsafeUser(models.Model):
     phone_number = models.CharField(max_length=255, null=True, blank=True)
     webhook_url = models.URLField(null=True, blank=True)
 
-#@receiver(post_save, sender=User)
-#def update_user_profile(sender, instance, created, **kwargs):
-    #if created:
-    #    ChildSafeUser.objects.create(user=instance)
-    #instance.profile.save()
+    def __str__(self):
+        return "{0}: {1} {2}".format(self.id,
+                                     self.first_name,
+                                     self.last_name)

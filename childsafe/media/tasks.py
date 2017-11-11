@@ -5,6 +5,7 @@ from django.conf import settings
 import requests
 
 from clarifai.rest import ClarifaiApp
+from twilio.rest import Client
 
 from .models import MediaItem
 
@@ -121,3 +122,25 @@ def scan_mediaitem_on_clarifai_moderation(id):
     mediaitem.save()
 
     return result
+
+
+@shared_task
+def send_sms_notification(report):
+    client = Client(settings.TWILIO_ACCOUNT_SID,
+                    settings.TWILIO_AUTH_TOKEN)
+
+    mediaitem = MediaItem.objects.get(id=report['mediaitem_id'])
+
+    body = "[Alert from childsafe.io]\n" \
+           "Match Type: {0}\n" \
+           "Resource ID: {1}\n" \
+           "URI: {2}" \
+           "".format(report['match_type'],
+                     report['resource_id'],
+                     report['url'])
+
+    message = client.messages.create(from_=settings.TWILIO_PHONE_NUMBER,
+                                     to=mediaitem.user.phone_number,
+                                     body=body)
+
+    return body 

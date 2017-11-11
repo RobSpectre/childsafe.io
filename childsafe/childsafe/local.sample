@@ -6,11 +6,14 @@ EMAIL_HOST_PASSWORD = 'password'
 EMAIL_PORT = 587
 EMAIL_FAIL_SILENTLY = False
 SERVER_EMAIL = "humantrafficking@example.com"
+
 TWILIO_ACCOUNT_SID = "ACxxxx"
 TWILIO_AUTH_TOKEN = "yyyyyyy"
 TWILIO_PHONE_NUMBER = "+15556667777"
-TWILIO_WHISPER_NUMBER = "+15556667778"
+
 TELLFINDER_API_KEY = "zzzzz"
+
+CLARIFAI_API_KEY = "b24d80e4a1624549be7103aa0dc79710"
 
 # These users receive tips.
 ADMINS = [('Recipient', 'recipient@example.com')]
