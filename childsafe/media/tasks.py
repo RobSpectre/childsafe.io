@@ -1,12 +1,10 @@
-import hashlib
-
 from celery import shared_task
 
 from django.conf import settings
 
-from io import BytesIO
-
 import requests
+
+from clarifai.rest import ClarifaiApp
 
 from .models import MediaItem
 
@@ -14,6 +12,8 @@ from .models import MediaItem
 @shared_task
 def scan_mediaitem(id):
     scan_mediaitem_on_tellfinder.apply_async(args=[id])
+    scan_mediaitem_on_clarifai_nsfw.apply_async(args=[id])
+    scan_mediaitem_on_clarifai_moderation.apply_async(args=[id])
 
     return id
 
@@ -49,23 +49,16 @@ def scan_mediaitem_on_photodna(id):
 def scan_mediaitem_on_tellfinder(id):
     mediaitem = MediaItem.objects.get(id=id)
 
-    image_response = requests.get(mediaitem.url)
-
-    image_bytes = BytesIO(image_response.content)
-
-    image_sha = hashlib.sha1()
-    image_sha.update(image_bytes.getvalue())
-
-    uri = "https://api.tellfinder.com/image/" \
-          "{0}".format(image_sha.hexdigest())
+    uri = "https://api.tellfinder.com/similarimages"
     headers = {"x-api-key": settings.TELLFINDER_API_KEY}
 
-    results = requests.get(uri, headers=headers)
+    results = requests.post(uri, headers=headers,
+                            json={"url": mediaitem.url})
 
     if results.status_code == 200:
-        result_dict = results.json()
+        results_json = results.json()
 
-        if result_dict.get('total', None):
+        if results_json.get("similarUrls", None):
             mediaitem.positive = True
 
         mediaitem.scanned = True
@@ -77,3 +70,54 @@ def scan_mediaitem_on_tellfinder(id):
         return results.status_code
 
     return results.json()
+
+
+@shared_task
+def scan_mediaitem_on_clarifai_nsfw(id):
+    mediaitem = MediaItem.objects.get(id=id)
+    clarifai_app = ClarifaiApp(api_key=settings.CLARIFAI_API_KEY)
+
+    model = clarifai_app.models.get('nsfw-v1.0')
+
+    result = model.predict_by_url(url=mediaitem.url)
+
+    if result['status']['code'] == 10000:
+        for output in result['outputs']:
+            if output.get('data', None):
+                for concept in output['data']['concepts']:
+                    if concept['name'] == 'nsfw' and concept['value'] >= 0.60:
+                        mediaitem.positive = True
+    else:
+        return {"error": "Clarifai Failure", "result": result}
+
+    mediaitem.scanned = True
+    mediaitem.save()
+
+    return result
+
+
+@shared_task
+def scan_mediaitem_on_clarifai_moderation(id):
+    mediaitem = MediaItem.objects.get(id=id)
+    clarifai_app = ClarifaiApp(api_key=settings.CLARIFAI_API_KEY)
+
+    model = clarifai_app.models.get('moderation')
+
+    result = model.predict_by_url(url=mediaitem.url)
+
+    if result['status']['code'] == 10000:
+        for output in result['outputs']:
+            if output.get('data', None):
+                for concept in output['data']['concepts']:
+                    if concept['name'] == 'safe':
+                        continue
+
+                if concept['value'] >= 0.60:
+                    mediaitem.positive = True
+    else:
+        return {"error": "Clarifai Failure", "result": result}
+
+    mediaitem.scanned = True
+    mediaitem.save()
+
+    return result
