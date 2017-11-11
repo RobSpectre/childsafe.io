@@ -1,18 +1,18 @@
 *************
-Garfield
+childsafe.io
 *************
 
-A communications platform for deterring high frequency buyers of underground
-commercial sex.
+No-code, easy configuration media scanning for cloud storage to keep children
+safe.
 
-Powered by `Django`_ and `Twilio`_.
+Powered by `Django`_ and `Celery`_.
 
 
-.. image:: https://travis-ci.org/RobSpectre/garfield.svg?branch=master
-    :target: https://travis-ci.org/RobSpectre/garfield
+.. image:: https://travis-ci.org/RobSpectre/childsafe.io.svg?branch=master
+    :target: https://travis-ci.org/RobSpectre/childsafe.io
 
-.. image:: https://codecov.io/gh/RobSpectre/garfield/branch/master/graph/badge.svg
-  :target: https://codecov.io/gh/RobSpectre/garfield
+.. image:: https://codecov.io/gh/RobSpectre/childsafe.io/branch/master/graph/badge.svg
+  :target: https://codecov.io/gh/RobSpectre/childsafe.io
 
 
 **Table of Contents**
@@ -31,7 +31,7 @@ Install this `Django`_ application by first cloning the repository.
 
 .. code-block:: bash
   
-    git clone https://github.com/RobSpectre/garfield
+    git clone https://github.com/RobSpectre/childsafe.io
 
 
 Install the Python dependencies.
@@ -46,7 +46,7 @@ Create a local configuration file and customize with your settings.
 
 .. code-block:: bash
    
-    cd garfield/garfield/garfield
+    cd childsafe.io/childsafe/childsafe
     cp local.sample local.py
 
 
@@ -64,12 +64,6 @@ Run the server
 
     python manage.py runserver
 
-Configure a `Twilio phone number`_ to point to the `/sms` endpoint of your host.
-
-.. image:: https://raw.githubusercontent.com/RobSpectre/garfield/master/garfield/garfield/static/images/twilio_phone_number_screenshot.png 
-    :target: https://www.twilio.com/console/phone-numbers/incoming
-
-Text "HELP" to the number you configured.
 
 
 Development
@@ -91,13 +85,13 @@ To hack on the project, fork the repo and then clone locally.
 
 .. code-block:: bash
 
-    $ git clone https://github.com/RobSpectre/garfield.git
+    $ git clone https://github.com/RobSpectre/childsafe.io.git
 
 Move to the project directory.
 
 .. code-block:: bash
 
-    $ cd garfield 
+    $ cd childsafe 
 
 Install the Python dependencies (preferably in a virtualenv).
 
@@ -105,13 +99,12 @@ Install the Python dependencies (preferably in a virtualenv).
 
     $ pip install -r requirements.txt 
 
-Then customize your local variables to configure your `Twilio`_, email and
-admin accounts you want to receive tips.
+Then customize your local variables to configure your external dependencies.
 
 .. code-block:: bash
 
-    $ cp garfield/garfield/local.sample garfield/garfield/local.py
-    $ vim garfield/garfield/local.py
+    $ cp childsafe.io/childsafe/local.sample childsafe/childsafe/local.py
+    $ vim childsafe/childsafe/local.py
 
 Move to the Django project root.
 
@@ -147,14 +140,16 @@ Use Tox for easily running the test suite.
 Meta
 ============
 
-* Written by `Rob Spectre`_
+* Created by `Eddie Zaneski`_, `Greg Baugues`_, `Ricky Robinett`_, and `Rob Spectre`_
 * Released under `MIT License`_
 * Software is as is - no warranty expressed or implied.
 
 
 .. _Rob Spectre: http://www.brooklynhacker.com
+.. _Eddie Zaneski: https://doesnotscale.com/
+.. _Greg Baugues: http://baugues.com/
+.. _Ricky Robinett: https://about.me/rickyrobinett
 .. _MIT License: http://opensource.org/licenses/MIT
 .. _Django: https://www.djangoproject.com/
-.. _Twilio: https://twilio.com
-.. _Twilio phone number: https://www.twilio.com/console/phone-numbers/incoming
+.. _Celery: http://www.celeryproject.org/
 .. _RabbitMQ: https://www.rabbitmq.com/download.html
