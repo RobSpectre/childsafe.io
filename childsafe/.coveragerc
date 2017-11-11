@@ -1,0 +1,21 @@
+[run]
+source =
+    ./
+
+[report]
+omit =
+    manage.py
+    childsafe/*
+    **/migrations/**
+    **/apps.py
+    .virtualenvs
+    .virtualenv
+    venv
+    .env
+
+show_missing = True
+
+exclude_lines = 
+    def __repr__
+    except ImportError
+    pragma: no cover
