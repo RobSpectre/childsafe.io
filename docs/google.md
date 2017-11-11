@@ -6,21 +6,16 @@
 
 ## Assumptions
 
-- You have a Google Cloud Bucket where you are already storing images
-- The images in that Google Cloud Bucket are publicly accessible
+- You have a Google Cloud Bucket that stores user generated images
+- That bucket is publicly accessible
 
-Your bucket needs to be publicly readable. If it's not: 
+If that bucket is not accessible, you'll need to go to the bucket list and add `AllUsers` with `Bucket Object Viewer Permissions`. 
 
-Edit bucket permissions: 
-
-https://cloud.google.com/storage/docs/access-control/making-data-public
-
-- edit permissions
-- allUsers to Storage Object Viewer
+![](make-bucket-public.gif)
 
 ## Set up a service account
 
-1. Open the list of credentials in the [Google Cloud Platform Console](https://console.cloud.google.com/apis/credentials).
+1. Open the [credentials list in the Google Cloud Platform Console](https://console.cloud.google.com/apis/credentials).
 
 2. Click *Create Credentials* and select *Select Service account key.*
 
@@ -30,9 +25,12 @@ https://cloud.google.com/storage/docs/access-control/making-data-public
 
 ![](/images/new-account.png)
 
-4. Click Create. The file will download. Move it to your working directory and rename it to `client_secrets.json`
+4. Click Create. The file will download. 
 
 ![](/images/service-account-success.png)
+
+5. Move it to your working directory and rename it to `client_secrets.json`
+
 
 ## Setup the Google Cloud Storage CLI
 
@@ -42,13 +40,28 @@ Install and update the Google Cloud Storage CLI.
 curl https://sdk.cloud.google.com | bash
 exec -l $SHELL #restart your shell
 gcloud components update
-gcloud components install beta
-gcloud init
+gcloud components install beta #Functions is in beta
 ```
 
-(Perhaps need more color on the gcloud init dialog)
+On gcloud init: 
 
-Inside `client_secrets.json` and find the service account email address (it  looks something like: `childsafe@childsafe-XXXXX.iam.gserviceaccount.com`)
+2 - Create new configuration
+
+When promoted for email, select the newly created service account. 
+
+Yes when asked to enable cloud resource manager. 
+
+No when asked if you want to enable compute. 
+
+are there flags to say no to turning on compute? 
+
+Open `client_secrets.json` and find the line that says: 
+
+```
+"client_email":"childsafe@childsafe-XXXXX.iam.gserviceaccount.com"
+```
+
+
 
 Use this email address to authenticate the CLI: 
 
