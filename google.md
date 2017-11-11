@@ -9,6 +9,15 @@
 - You have a Google Cloud Bucket where you are already storing images
 - The images in that Google Cloud Bucket are publicly accessible
 
+Your bucket needs to be publicly readable. If it's not: 
+
+Edit bucket permissions: 
+
+https://cloud.google.com/storage/docs/access-control/making-data-public
+
+- edit permissions
+- allUsers to Storage Object Viewer
+
 ## Set up a service account
 
 1. Open the list of credentials in the [Google Cloud Platform Console](https://console.cloud.google.com/apis/credentials).
@@ -37,100 +46,85 @@ gcloud components install beta
 gcloud init
 ```
 
-Open `client_secrets.json` and find the service account email address. It looks something like: `childsafe@childsafe-XXXXX.iam.gserviceaccount.com`
+(Perhaps need more color on the gcloud init dialog)
 
-Authenticate using the CLI: 
+Inside `client_secrets.json` and find the service account email address (it  looks something like: `childsafe@childsafe-XXXXX.iam.gserviceaccount.com`)
+
+Use this email address to authenticate the CLI: 
 
 ```
 gcloud auth activate-service-account [YOUR_SERVICE_EMAIL] --key-file client_secret.json
 ```
 
-If this goes well, you'll get: 
+If this goes well, you can run `gcloud auth list` and see the service account. 
 
-```
-Activated service account credentials for: [YOUR_SERVICE_EMAIL]
-````
+## Set up a Google Cloud Function
 
-You can also confirm that all went well by using: 
+Now that we have the CLI set up, we can set up a function, and trigger it when a new file uploaded to your Google Cloud Storage bucket. 
 
-```
-
-gcloud auth list
-
-````
-Set up a Google Cloud Function
-
-Create a new file, `index.js`: 
+Create a new file, `index.js` and paste in this code: 
 
 ```js
-const querystring = require('querystring');
-const http = require('http');
+'use strict'
 
-exports.childSafe = function (event, callback) {
-  const file = event.data;
-  const url = file.mediaLink;
+const querystring = require('querystring')
+const http = require('http')
 
-  var postData = querystring.stringify({
-    'url' : url,
-  });
+exports.childSafe = function(event, callback) {
+  const file = event.data
+  const url = file.mediaLink
+  const resource_id = event.id
 
-  console.log("File uploaded: " + url)
+  const postData = querystring.stringify({ url, resource_id })
 
-  var options = {
-    hostname: 'baugues.ngrok.io',
+  console.log('File uploaded: ' + url)
+
+  const options = {
+    hostname: 'tunnel.brooklynhacker.com',
     path: '/receive/media/',
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Content-Length': postData.length
     }
+  }
 
-    // hostname: 'tunnel.brooklynhacker.com',
-    // path: '/receive/media/',
-    // method: 'POST',
-    // headers: {
-    //   'Content-Type': 'application/x-www-form-urlencoded',
-    //   'Content-Length': postData.length
-    // }
-  };
+  const req = http.request(options, res => {
+    let body = ''
 
-  var req = http.request(options, (res) => {
-    context.log('statusCode:', res.statusCode);
+    if (res.statusCode !== 201) {
+      console.error(`status code: ${res.statusCode}`)
+    }
 
-    res.on('data', (d) => {
-      context.log("Data", d.toString('utf8'));
-    });
-  });
+    res.on('data', chunk => {
+      body += chunk
+    })
 
-  req.write(postData);
-  req.end();
-  callback();
-};
+    res.on('end', ()=> {
+      console.log(body)
+      callback()
+    })
+  })
 
+  req.write(postData)
+  req.end()
+}
 ```
 
 Deploy the function: 
 
 ```
-gcloud beta functions deploy childSafe --trigger-bucket gs://childsafe
+gcloud beta functions deploy childSafe --trigger-bucket gs://[YOURBUCKETNAME]
 ```
 
-upload a file: 
+Once that's complete, upload a file to your bucket to test it out. 
 
 ```
-gsutil cp test.jpg gs://[yourbucketname]
+gsutil cp test.jpg gs://[YOURBUCKETNAME]
 ```
 
 ----------
 
-Your bucket needs to be publicly readable. If it's not: 
-
-Edit bucket permissions: 
-
-https://cloud.google.com/storage/docs/access-control/making-data-public
-
-- edit permissions
-- allUsers to Storage Object Viewer
 
 
 
