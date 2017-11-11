@@ -1,0 +1,39 @@
+{# Settings #}
+{% set mainNavAlignment = "left" %}
+
+<!-- Header -->
+<header id="js-header" class="u-header u-header--static">
+  <div class="u-header__section u-header__section--light u-shadow-v19 g-bg-white g-transition-0_3 g-py-10">
+    <nav class="js-mega-menu navbar navbar-expand-lg">
+      <div class="container-fluid">
+        <!-- Responsive Toggle Button -->
+        <button class="navbar-toggler navbar-toggler-right btn g-line-height-1 g-brd-none g-pa-0 g-pos-abs g-top-8 g-right-0" type="button"
+                aria-label="Toggle navigation"
+                aria-expanded="false"
+                aria-controls="navBar"
+                data-toggle="collapse"
+                data-target="#navBar">
+          <span class="hamburger hamburger--slider">
+            <span class="hamburger-box">
+              <span class="hamburger-inner"></span>
+            </span>
+          </span>
+        </button>
+        <!-- End Responsive Toggle Button -->
+
+        <!-- Logo -->
+        <a href="{{ root }}index.html" class="navbar-brand">
+          <img src="{{ root }}assets/img/logo/logo-1.png" alt="Image Description">
+        </a>
+        <!-- End Logo -->
+
+        {% include "html/assets/include/nunjucks/partials/blocks/navs/nav-main.njk" %}
+
+        <div class="d-inline-block g-hidden-xs-down g-pos-rel g-valign-middle g-pl-30 g-pl-0--lg">
+          <a class="btn u-btn-outline-primary g-font-size-13 text-uppercase g-py-10 g-px-15" href="https://wrapbootstrap.com/theme/unify-responsive-website-template-WB0412697?ref=htmlstream" target="_blank">Purchase now</a>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+<!-- End Header -->

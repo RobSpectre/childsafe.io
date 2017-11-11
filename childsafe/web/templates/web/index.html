@@ -1,0 +1,32 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Title -->
+    <title>App | Unify - Responsive Website Template</title>
+
+    <!-- Required Meta Tags Always Come First -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+
+    {% include "web/partials/includes.html" %}    
+  </head>
+
+  <body>
+    <main>
+      {% include 'web/partials/header.html' %}
+
+      {% block 'body' %}
+      {% endblock %}
+
+      {% include 'web/partials/footer.html' %}
+
+   </main>
+
+    {% include 'web/partials/footer-js.html' %}
+  </body>
+</html>
+
+
