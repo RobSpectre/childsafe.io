@@ -13,7 +13,7 @@
 
 1. Open the list of credentials in the [Google Cloud Platform Console](https://console.cloud.google.com/apis/credentials).
 
-2. Click Create credentials and select "Select Service account key."
+2. Click *Create Credentials* and select *Select Service account key.*
 
 ![](/images/service-account-key.png)
 
@@ -25,27 +25,11 @@
 
 ![](/images/service-account-success.png)
 
-Google Cloud Storage
-Set up a service account
+## Setup the Google Cloud Storage CLI
 
-Open the list of credentials in the Google Cloud Platform Console.
-Click Create credentials.
-Select Service account key.
-A Create service account key window opens.
-Click the drop-down box below Service account, then click New service account. (service account actor?)
- Enter a name for the service account in Name.
-Use the default Service account ID or generate a different one.
-Select JSON
-Click Create.
-move file to `client_secrets.json`
+Install and update the Google Cloud Storage CLI. 
 
-A Service account created window is displayed and the private key for the Key type you selected is downloaded automatically. If you selected a P12 key, the private key's password ("notasecret") is displayed.
-
-Click Close.
-Setup the Google Cloud Storage CLI
-(https://cloud.google.com/storage/docs/gsutil_install)
-
-```
+```shell
 curl https://sdk.cloud.google.com | bash
 exec -l $SHELL #restart your shell
 gcloud components update
@@ -53,9 +37,7 @@ gcloud components install beta
 gcloud init
 ```
 
-Perhaps need more instructions on the dialog here. 
-
-Open `client_secrets.json` and find the client email address. It will look something like: `childsafe@childsafe-XXXXX.iam.gserviceaccount.com`
+Open `client_secrets.json` and find the service account email address. It looks something like: `childsafe@childsafe-XXXXX.iam.gserviceaccount.com`
 
 Authenticate using the CLI: 
 
@@ -72,7 +54,9 @@ Activated service account credentials for: [YOUR_SERVICE_EMAIL]
 You can also confirm that all went well by using: 
 
 ```
+
 gcloud auth list
+
 ````
 Set up a Google Cloud Function
 
