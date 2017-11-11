@@ -1,16 +1,36 @@
-from django.conf.urls import url, include
-from django.contrib.auth.models import User
-
-from rest_framework.decorators import detail_route
 from rest_framework import routers, serializers, viewsets
 
 from media.models import MediaItem
+from web.models import ChildsafeUser
 
 
-class MediaItemSerializer(serializers.HyperlinkedModelSerializer):
+class ChildsafeUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ChildsafeUser
+
+        fields = ['id']
+
+
+class MediaItemSerializer(serializers.ModelSerializer):
+    user = ChildsafeUserSerializer(read_only=True)
+
+    user_id = serializers.PrimaryKeyRelatedField(
+        queryset=ChildsafeUser.objects.all(),
+        source='user',
+        write_only=True)
+
     class Meta:
         model = MediaItem
-        fields = ('id', 'url', 'status', 'scanned', 'positive', 'alerted')
+
+        fields = ('id',
+                  'resource_id',
+                  'url',
+                  'status',
+                  'scanned',
+                  'positive',
+                  'alerted',
+                  'user',
+                  'user_id')
 
 
 class MediaItemViewSet(viewsets.ModelViewSet):

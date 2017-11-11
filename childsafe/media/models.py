@@ -2,6 +2,8 @@ import uuid
 
 from django.db import models
 
+from web.models import ChildsafeUser
+
 
 class MediaItem(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
@@ -16,6 +18,10 @@ class MediaItem(models.Model):
     scanned = models.BooleanField(default=False)
     positive = models.BooleanField(default=False)
     alerted = models.BooleanField(default=False)
+
+    user = models.ForeignKey(ChildsafeUser,
+                             null=True,
+                             related_name="mediaitems")
 
     def __str__(self):
         return "{0}: {1}".format(self.id, self.url)
