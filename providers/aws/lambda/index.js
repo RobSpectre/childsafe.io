@@ -2,7 +2,7 @@
 
 const request = require('request')
 
-const CHILD_SAVE_URL = 'http://tunnel.brooklynhacker.com/receive/media/'
+const CHILD_SAFE_URL = process.env.CHILD_SAFE_URL
 
 exports.handler = (event, context, callback) => {
   const promises = event.Records.map(record => {
@@ -13,7 +13,7 @@ exports.handler = (event, context, callback) => {
       const url = `https://s3.amazonaws.com/${bucket}/${key}`
 
       request.post(
-        CHILD_SAVE_URL,
+        CHILD_SAFE_URL,
         { form: { url, resource_id } },
         (err, res, body) => {
           if (err) {
