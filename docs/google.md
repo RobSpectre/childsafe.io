@@ -11,7 +11,7 @@
 
 If that bucket is not accessible, you'll need to go to the bucket list and add `AllUsers` with `Bucket Object Viewer Permissions`. 
 
-![](make-bucket-public.gif)
+![](/images/make-bucket-public.gif)
 
 ## Set up a service account
 
