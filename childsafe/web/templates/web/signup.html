@@ -12,34 +12,50 @@
                 <h2 class="h2 g-color-black g-font-weight-600">Signup</h2>
               </header>
 
+{{ form.errors }}
+{{ form.non_field_errors }}
+
+
               <!-- Form -->
-              <form class="g-py-15">
+              <form class="g-py-15" method="post">
+                {% csrf_token %}
+
                 <div class="row">
                   <div class="col-xs-12 col-sm-6 mb-4">
                     <label class="g-color-gray-dark-v2 g-font-weight-600 g-font-size-13">First name:</label>
-                    <input class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15" type="email" placeholder="John">
+                    <input class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15" type="text" name="first_name" maxlength="255" id="id_first_name">
                   </div>
 
                   <div class="col-xs-12 col-sm-6 mb-4">
                     <label class="g-color-gray-dark-v2 g-font-weight-600 g-font-size-13">Last name:</label>
-                    <input class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15" type="tel" placeholder="Doe">
+                    <input class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15" type="text" name="last_name" maxlength="255" id="id_last_name">
                   </div>
                 </div>
 
                 <div class="mb-4">
+                  <label class="g-color-gray-dark-v2 g-font-weight-600 g-font-size-13">Organization:</label>
+                  <input class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15" type="text" name="organization" maxlength="255" id="id_organization">
+                </div>
+
+                <div class="mb-4">
                   <label class="g-color-gray-dark-v2 g-font-weight-600 g-font-size-13">Email:</label>
-                  <input class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15" type="email" placeholder="johndoe@gmail.com">
+                  <input class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15"  name="username" autofocus maxlength="150" id="id_username">
+                </div>
+
+                <div class="mb-4">
+                  <label class="g-color-gray-dark-v2 g-font-weight-600 g-font-size-13">Phone Number:</label>
+                  <input class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15" type="tel" name="phone_number" maxlength="30" id="id_phone_number">
                 </div>
 
                 <div class="row">
                   <div class="col-xs-12 col-sm-6 mb-4">
                     <label class="g-color-gray-dark-v2 g-font-weight-600 g-font-size-13">Password:</label>
-                    <input class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15" type="password" placeholder="Password">
+                    <input class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15" type="password" placeholder="Password" name="password1" id="id_password1" required>
                   </div>
 
                   <div class="col-xs-12 col-sm-6 mb-4">
                     <label class="g-color-gray-dark-v2 g-font-weight-600 g-font-size-13">Confirm Password:</label>
-                    <input class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15" type="password" placeholder="Password">
+                    <input class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15" type="password" placeholder="Password" name="password2" id="id_password2" required>
                   </div>
                 </div>
 
@@ -54,7 +70,7 @@
                     </label>
                   </div>
                   <div class="col-4 align-self-center text-right">
-                    <a href="/user/profile/"><button class="btn btn-md u-btn-primary rounded g-py-13 g-px-25" type="button">Signup</button></a>
+                    <button class="btn btn-md u-btn-primary rounded g-py-13 g-px-25" type="submit">Signup</button>
                   </div>
                 </div>
               </form>
