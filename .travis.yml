@@ -1,0 +1,8 @@
+language: python
+install:
+  - pip install tox 
+  - pip install codecov
+script:
+  - tox
+env:
+  - TOXENV: py34

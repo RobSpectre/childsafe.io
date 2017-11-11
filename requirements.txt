@@ -1,0 +1,5 @@
+Django==1.11
+twilio==6.7.1
+Pillow==3.4.1
+django-celery-beat==1.0.1
+django-celery-results==1.0.1
