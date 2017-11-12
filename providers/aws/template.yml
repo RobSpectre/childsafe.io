@@ -2,6 +2,11 @@ AWSTemplateFormatVersion: 2010-09-09
 Transform: AWS::Serverless-2016-10-31
 Description: A Lambda function to that sends new S3 uploads to ChildSafe.io for analysis
 
+Parameters:
+  UserId:
+    Type: String
+    Description: Your ChildSafe.io user_id
+
 Resources:
   SendToChildSafeFunction:
     Type: AWS::Serverless::Function
@@ -10,3 +15,6 @@ Resources:
       Policies: AmazonS3ReadOnlyAccess
       Runtime: nodejs6.10
       CodeUri: s3://childsafe.eddiezane.com/lambda.zip
+      Environment:
+        Variables:
+          CHILD_SAFE_USER_ID: !Sub "${UserId}"

@@ -4,6 +4,33 @@
 {% block 'body' %}
  <section class="g-mb-100" style="margin-top: 120px">
       <div class="container">
+        <div style="margin-bottom: 10px;">
+                <h2 class="h4 g-font-weight-300">Integrate with</h2>
+                <a href="{% url 'docs_aws' %}" class="btn btn-md u-btn-yellow g-font-weight-700 g-letter-spacing-0_5 text-uppercase text-left g-rounded-10 g-py-10 g-mb-15 g-mb-0--lg">
+                <span class="float-right g-font-size-13">
+                  Amazon
+                  <span class="d-block g-font-size-10">Web Services</span>
+                </span>
+                <i class="fa fa-amazon float-left g-font-size-26 g-mr-15"></i>
+              </a>
+
+                <a href="{% url 'docs_gcs' %}" class="btn btn-md u-btn-primary g-font-weight-700 g-letter-spacing-0_5 text-uppercase text-left g-rounded-10 g-py-10 g-mb-15 g-mb-0--lg">
+                  <span class="float-right g-font-size-13">
+                    Google 
+                    <span class="d-block g-font-size-10">Cloud Platform</span>
+                  </span>
+                  <i class="fa fa-google float-left g-font-size-26 g-mr-15"></i>
+                </a>
+
+                <a href="{% url 'docs_azure' %}" class="btn btn-md u-btn-purple g-font-weight-700 g-letter-spacing-0_5 text-uppercase text-left g-rounded-10 g-py-10 g-mb-15 g-mb-0--lg">
+                  <span class="float-right g-font-size-13">
+                    Microsoft 
+                    <span class="d-block g-font-size-10">Azure</span>
+                  </span>
+                  <i class="fa fa-windows float-left g-font-size-26 g-mr-15"></i>
+                </a>
+        </div>
+
         <div class="row">
           <!-- Profle Content -->
           <div class="col-lg-12">
