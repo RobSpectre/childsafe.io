@@ -26,17 +26,16 @@
               <!-- Edit Profile -->
               <div class="tab-pane fade show active" id="nav-1-1-default-hor-left-underline--1" role="tabpanel">
                 <h2 class="h4 g-font-weight-300">Manage your Name, ID and Email Addresses</h2>
-                <p>Below are name, email addresse, contacts and more on file for your account.</p>
+                <p>Below are name, email address, contacts and more on file for your account.</p>
 
                 <ul class="list-unstyled g-mb-30">
                   <!-- Name -->
                   <li class="d-flex align-items-center justify-content-between g-brd-bottom g-brd-gray-light-v4 g-py-15">
                     <div class="g-pr-10">
                       <strong class="d-block d-md-inline-block g-color-gray-dark-v2 g-width-200 g-pr-10">Name</strong>
-                      <span class="align-top">John Doe</span>
+                      <span class="align-top">{{ user.first_name }} {{user.last_name }}</span>
                     </div>
                     <span>
-                        <i class="icon-pencil g-color-gray-dark-v5 g-color-primary--hover g-cursor-pointer g-pos-rel g-top-1"></i>
                       </span>
                   </li>
                   <!-- End Name -->
@@ -45,10 +44,10 @@
                   <li class="d-flex align-items-center justify-content-between g-brd-bottom g-brd-gray-light-v4 g-py-15">
                     <div class="g-pr-10">
                       <strong class="d-block d-md-inline-block g-color-gray-dark-v2 g-width-200 g-pr-10">Your ID</strong>
-                      <span class="align-top">FKJ-032440</span>
+                      <input id="user_id" class="align-top" value="{{ user.childsafeuser.id }}" style="border: 0px; color: #999; width: 340px; margin-right: 10px;" />
                     </div>
                     <span>
-                        <i class="icon-pencil g-color-gray-dark-v5 g-color-primary--hover g-cursor-pointer g-pos-rel g-top-1"></i>
+                        <i class="icon-docs g-color-gray-dark-v5 g-color-primary--hover g-cursor-pointer g-pos-rel g-top-1" onclick="copyId()" id="copy_button"></i>
                       </span>
                   </li>
                   <!-- End Your ID -->
@@ -56,35 +55,21 @@
                   <!-- Company Name -->
                   <li class="d-flex align-items-center justify-content-between g-brd-bottom g-brd-gray-light-v4 g-py-15">
                     <div class="g-pr-10">
-                      <strong class="d-block d-md-inline-block g-color-gray-dark-v2 g-width-200 g-pr-10">Company name</strong>
-                      <span class="align-top">Htmlstream</span>
+                      <strong class="d-block d-md-inline-block g-color-gray-dark-v2 g-width-200 g-pr-10">Organization</strong>
+                      <span class="align-top">{{ user.childsafeuser.organization }}</span>
                     </div>
                     <span>
-                        <i class="icon-pencil g-color-gray-dark-v5 g-color-primary--hover g-cursor-pointer g-pos-rel g-top-1"></i>
                       </span>
                   </li>
                   <!-- End Company Name -->
 
-                  <!-- Position -->
-                  <li class="d-flex align-items-center justify-content-between g-brd-bottom g-brd-gray-light-v4 g-py-15">
-                    <div class="g-pr-10">
-                      <strong class="d-block d-md-inline-block g-color-gray-dark-v2 g-width-200 g-pr-10">Position</strong>
-                      <span class="align-top">Project Manager</span>
-                    </div>
-                    <span>
-                        <i class="icon-pencil g-color-gray-dark-v5 g-color-primary--hover g-cursor-pointer g-pos-rel g-top-1"></i>
-                      </span>
-                  </li>
-                  <!-- End Position -->
-
                   <!-- Primary Email Address -->
                   <li class="d-flex align-items-center justify-content-between g-brd-bottom g-brd-gray-light-v4 g-py-15">
                     <div class="g-pr-10">
-                      <strong class="d-block d-md-inline-block g-color-gray-dark-v2 g-width-200 g-pr-10">Primary email address</strong>
-                      <span class="align-top">john.doe@htmlstream.com</span>
+                      <strong class="d-block d-md-inline-block g-color-gray-dark-v2 g-width-200 g-pr-10">Email address</strong>
+                      <span class="align-top">{{ user.childsafeuser.email_address }}</span>
                     </div>
                     <span>
-                        <i class="icon-pencil g-color-gray-dark-v5 g-color-primary--hover g-cursor-pointer g-pos-rel g-top-1"></i>
                       </span>
                   </li>
                   <!-- End Primary Email Address -->
@@ -92,63 +77,25 @@
                   <!-- Linked Account -->
                   <li class="d-flex align-items-center justify-content-between g-brd-bottom g-brd-gray-light-v4 g-py-15">
                     <div class="g-pr-10">
-                      <strong class="d-block d-md-inline-block g-color-gray-dark-v2 g-width-200 g-pr-10">Linked account</strong>
-                      <span class="align-top">Facebook</span>
+                      <strong class="d-block d-md-inline-block g-color-gray-dark-v2 g-width-200 g-pr-10">Phone Number</strong>
+                      <span class="align-top">{{ user.childsafeuser.phone_number }}</span>
                     </div>
                     <span>
-                        <i class="icon-pencil g-color-gray-dark-v5 g-color-primary--hover g-cursor-pointer g-pos-rel g-top-1"></i>
                       </span>
                   </li>
                   <!-- End Linked Account -->
 
-                  <!-- Website -->
+                  <!-- Webhook -->
                   <li class="d-flex align-items-center justify-content-between g-brd-bottom g-brd-gray-light-v4 g-py-15">
                     <div class="g-pr-10">
-                      <strong class="d-block d-md-inline-block g-color-gray-dark-v2 g-width-200 g-pr-10">Website</strong>
-                      <span class="align-top">https://htmlstream.com</span>
+                      <strong class="d-block d-md-inline-block g-color-gray-dark-v2 g-width-200 g-pr-10">Webhook</strong>
+                      <span class="align-top">{{ user.childsafeuser.webhook }}</span>
                     </div>
                     <span>
-                        <i class="icon-pencil g-color-gray-dark-v5 g-color-primary--hover g-cursor-pointer g-pos-rel g-top-1"></i>
                       </span>
                   </li>
                   <!-- End Website -->
-
-                  <!-- Phone Number -->
-                  <li class="d-flex align-items-center justify-content-between g-brd-bottom g-brd-gray-light-v4 g-py-15">
-                    <div class="g-pr-10">
-                      <strong class="d-block d-md-inline-block g-color-gray-dark-v2 g-width-200 g-pr-10">Phone number</strong>
-                      <span class="align-top">(+123) 456 7890</span>
-                    </div>
-                    <span>
-                        <i class="icon-pencil g-color-gray-dark-v5 g-color-primary--hover g-cursor-pointer g-pos-rel g-top-1"></i>
-                      </span>
-                  </li>
-                  <!-- End Phone Number -->
-
-                  <!-- Office Number -->
-                  <li class="d-flex align-items-center justify-content-between g-brd-bottom g-brd-gray-light-v4 g-py-15">
-                    <div class="g-pr-10">
-                      <strong class="d-block d-md-inline-block g-color-gray-dark-v2 g-width-200 g-pr-10">Office number</strong>
-                      <span class="align-top">(+123) 456 7891</span>
-                    </div>
-                    <span>
-                        <i class="icon-pencil g-color-gray-dark-v5 g-color-primary--hover g-cursor-pointer g-pos-rel g-top-1"></i>
-                      </span>
-                  </li>
-                  <!-- End Office Number -->
-
-                  <!-- Address -->
-                  <li class="d-flex align-items-center justify-content-between g-brd-bottom g-brd-gray-light-v4 g-py-15">
-                    <div class="g-pr-10">
-                      <strong class="d-block d-md-inline-block g-color-gray-dark-v2 g-width-200 g-pr-10">Address</strong>
-                      <span class="align-top">795 Folsom Ave, Suite 600, San Francisco CA, US </span>
-                    </div>
-                    <span>
-                        <i class="icon-pencil g-color-gray-dark-v5 g-color-primary--hover g-cursor-pointer g-pos-rel g-top-1"></i>
-                      </span>
-                  </li>
-                  <!-- End Address -->
-                </ul>
+                 </ul>
 
                 <div class="text-sm-right">
                   <a class="btn u-btn-darkgray rounded-0 g-py-12 g-px-25 g-mr-10" href="#">Cancel</a>
@@ -473,13 +420,15 @@
                 <h2 class="h4 g-font-weight-300">Manage your Notifications</h2>
                 <p class="g-mb-25">Below are the notifications you may manage.</p>
 
-                <form>
+                <form method="POST">
+                  {% csrf_token %}
+
                   <!-- Email Notification -->
                   <div class="form-group">
                     <label class="d-flex align-items-center justify-content-between">
-                      <span>Email notification</span>
+                      <span>Email notifications</span>
                       <div class="u-check">
-                        <input class="g-hidden-xs-up g-pos-abs g-top-0 g-right-0" name="emailNotification" type="checkbox" checked>
+                        <input class="g-hidden-xs-up g-pos-abs g-top-0 g-right-0" name="emailNotifications" type="checkbox" {% if user.childsafeuser.email_notifications %}checked{% endif %}>
                         <div class="u-check-icon-radio-v7">
                           <i class="d-inline-block"></i>
                         </div>
@@ -493,9 +442,9 @@
                   <!-- Comments Notification -->
                   <div class="form-group">
                     <label class="d-flex align-items-center justify-content-between">
-                      <span>Send me email notification when a user comments on my blog</span>
+                      <span>SMS notifications</span>
                       <div class="u-check">
-                        <input class="g-hidden-xs-up g-pos-abs g-top-0 g-right-0" name="commentNotification" type="checkbox">
+                        <input class="g-hidden-xs-up g-pos-abs g-top-0 g-right-0" name="smsNotifications" type="checkbox" {% if user.childsafeuser.sms_notifications %}checked{% endif %}>
                         <div class="u-check-icon-radio-v7">
                           <i class="d-inline-block"></i>
                         </div>
@@ -509,9 +458,9 @@
                   <!-- Update Notification -->
                   <div class="form-group">
                     <label class="d-flex align-items-center justify-content-between">
-                      <span>Send me email notification for the latest update</span>
+                      <span>Phone calls</span>
                       <div class="u-check">
-                        <input class="g-hidden-xs-up g-pos-abs g-top-0 g-right-0" name="updateNotification" type="checkbox" checked>
+                        <input class="g-hidden-xs-up g-pos-abs g-top-0 g-right-0" name="phoneNotifications" type="checkbox" {% if user.childsafeuser.phone_notifications %}checked{% endif %}>
                         <div class="u-check-icon-radio-v7">
                           <i class="d-inline-block"></i>
                         </div>
@@ -522,41 +471,12 @@
 
                   <hr class="g-brd-gray-light-v4 g-my-25">
 
-                  <!-- Message Notification -->
-                  <div class="form-group">
-                    <label class="d-flex align-items-center justify-content-between">
-                      <span>Send me email notification when a user sends me message</span>
-                      <div class="u-check">
-                        <input class="g-hidden-xs-up g-pos-abs g-top-0 g-right-0" name="messageNotification" type="checkbox" checked>
-                        <div class="u-check-icon-radio-v7">
-                          <i class="d-inline-block"></i>
-                        </div>
-                      </div>
-                    </label>
-                  </div>
-                  <!-- End Message Notification -->
-
-                  <hr class="g-brd-gray-light-v4 g-my-25">
-
-                  <!-- Newsletter Notification -->
-                  <div class="form-group">
-                    <label class="d-flex align-items-center justify-content-between">
-                      <span>Receive our monthly newsletter</span>
-                      <div class="u-check">
-                        <input class="g-hidden-xs-up g-pos-abs g-top-0 g-right-0" name="newsletterNotification" type="checkbox">
-                        <div class="u-check-icon-radio-v7">
-                          <i class="d-inline-block"></i>
-                        </div>
-                      </div>
-                    </label>
-                  </div>
-                  <!-- End Newsletter Notification -->
-
                   <hr class="g-brd-gray-light-v4 g-my-25">
 
                   <div class="text-sm-right">
+                    <input type="hidden" name="form" value="notifications" />
                     <a class="btn u-btn-darkgray rounded-0 g-py-12 g-px-25 g-mr-10" href="#">Cancel</a>
-                    <a class="btn u-btn-primary rounded-0 g-py-12 g-px-25" href="#">Save Changes</a>
+                    <button class="btn u-btn-primary rounded-0 g-py-12 g-px-25" type="submit">Save Changes</button>
                   </div>
                 </form>
               </div>
@@ -568,4 +488,16 @@
         </div>
       </div>
     </section>
+    <script>
+      function copyId() {
+        var copyText = document.getElementById("user_id");
+        console.log(copyText);
+        copyText.select();
+        document.execCommand("Copy");
+        var span = document.createElement("span");
+        var node = document.createTextNode("Copied!");
+        span.appendChild(node);
+        copyText.parentNode.insertBefore(span, copyText.nextSibling);
+      }
+    </script>
 {% endblock %}

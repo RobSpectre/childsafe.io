@@ -49,7 +49,22 @@ def login_page(request):
 
 @login_required(login_url='/login/')
 def profile(request):
-    return render(request, 'web/profile.html')
+    user = request.user
+
+    if request.method == 'POST':
+        if request.POST.get("form") == "notifications":
+            user.childsafeuser.sms_notifications = \
+                request.POST.get("smsNotifications")
+            user.childsafeuser.email_notifications = \
+                request.POST.get("emailNotifications")
+            user.childsafeuser.phone_notifications = \
+                request.POST.get("phoneNotifications")
+            user.save()
+            user.refresh_from_db()
+    context = {
+        "user": user
+    }
+    return render(request, 'web/profile.html', context)
 
 
 def documentation(request):
