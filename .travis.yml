@@ -1,8 +1,11 @@
 language: python
 install:
-  - pip install tox 
-  - pip install codecov
+- pip install tox
+- pip install codecov
 script:
-  - tox
+- tox
 env:
-  - TOXENV: py34
+- TOXENV: py34
+notifications:
+  slack:
+    secure: bQ5Ye60j/jBxIBaV12HqABgig0meAIk1j5GyWwhCL1vUpNaHbfmY7Mk14FPGEsDOiHcW9y6kAdjR0RauNgQpQeze70VgYppGPJNhgTyBUmUb773B1j8j7kx9F3VJaNpSABKLFHvluxZt+H2w7tLgNStf4W+XUxPRkb8kZQgATfcNYX5AX+obYO9kcKY1jycS39aI14fWWc0kQ28HKTURxiHTVa+GRL5nyjFeWxfcSnbl4hlzUnH+6glfov0ZlA4dWO3vUno94+nWYtMbQp0wEdzAPQBWNwQUNaqXQYaU+6Zd54Pm+DLEN/phDTUTZjHcre0OkwGxOaE2S/XSCPTeUIFm3xIwznfN+m2z24wyW+XYxJlRUzC1LLWxMi0hlUBGgRj1S5N01gq+084Xt4IjvtBaN2NXX04U13Keu4dpbsYFj4jJK3t1AIy7rg2f8QRsr1mxbmO1UgM/pcuU7+1846FRiQhI6BiM2siZwIVRI1rBZ573SeOjgESN7sEjrNH02KG9WlHLOH0KuYF8TuVwK7H0PThVvaxoy15PL0d1jC20O7dzxPFB4A1ihUTZI6NxLzXRTuio4tmh/wPyrdd8c19XH6dnCeBlfUjVXaYwD5nDT4Ei1z93MXSM3aURzSLQD+t753OK3BEnHFYEz39+yPKezMx1Sbbv9JvFBJlSkXE=
