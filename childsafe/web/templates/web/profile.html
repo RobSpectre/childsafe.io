@@ -36,7 +36,6 @@
                       <span class="align-top">{{ user.first_name }} {{user.last_name }}</span>
                     </div>
                     <span>
-                        <i class="icon-pencil g-color-gray-dark-v5 g-color-primary--hover g-cursor-pointer g-pos-rel g-top-1"></i>
                       </span>
                   </li>
                   <!-- End Name -->
@@ -45,10 +44,10 @@
                   <li class="d-flex align-items-center justify-content-between g-brd-bottom g-brd-gray-light-v4 g-py-15">
                     <div class="g-pr-10">
                       <strong class="d-block d-md-inline-block g-color-gray-dark-v2 g-width-200 g-pr-10">Your ID</strong>
-                      <span class="align-top">{{ user.childsafeuser.id }}</span>
+                      <input id="user_id" class="align-top" value="{{ user.childsafeuser.id }}" style="border: 0px; color: #999; width: 340px; margin-right: 10px;" />
                     </div>
                     <span>
-                        <i class="icon-pencil g-color-gray-dark-v5 g-color-primary--hover g-cursor-pointer g-pos-rel g-top-1"></i>
+                        <i class="icon-docs g-color-gray-dark-v5 g-color-primary--hover g-cursor-pointer g-pos-rel g-top-1" onclick="copyId()" id="copy_button"></i>
                       </span>
                   </li>
                   <!-- End Your ID -->
@@ -60,7 +59,6 @@
                       <span class="align-top">{{ user.childsafeuser.organization }}</span>
                     </div>
                     <span>
-                        <i class="icon-pencil g-color-gray-dark-v5 g-color-primary--hover g-cursor-pointer g-pos-rel g-top-1"></i>
                       </span>
                   </li>
                   <!-- End Company Name -->
@@ -72,7 +70,6 @@
                       <span class="align-top">{{ user.childsafeuser.email_address }}</span>
                     </div>
                     <span>
-                        <i class="icon-pencil g-color-gray-dark-v5 g-color-primary--hover g-cursor-pointer g-pos-rel g-top-1"></i>
                       </span>
                   </li>
                   <!-- End Primary Email Address -->
@@ -84,7 +81,6 @@
                       <span class="align-top">{{ user.childsafeuser.phone_number }}</span>
                     </div>
                     <span>
-                        <i class="icon-pencil g-color-gray-dark-v5 g-color-primary--hover g-cursor-pointer g-pos-rel g-top-1"></i>
                       </span>
                   </li>
                   <!-- End Linked Account -->
@@ -96,7 +92,6 @@
                       <span class="align-top">{{ user.childsafeuser.webhook }}</span>
                     </div>
                     <span>
-                        <i class="icon-pencil g-color-gray-dark-v5 g-color-primary--hover g-cursor-pointer g-pos-rel g-top-1"></i>
                       </span>
                   </li>
                   <!-- End Website -->
@@ -493,4 +488,16 @@
         </div>
       </div>
     </section>
+    <script>
+      function copyId() {
+        var copyText = document.getElementById("user_id");
+        console.log(copyText);
+        copyText.select();
+        document.execCommand("Copy");
+        var span = document.createElement("span");
+        var node = document.createTextNode("Copied!");
+        span.appendChild(node);
+        copyText.parentNode.insertBefore(span, copyText.nextSibling);
+      }
+    </script>
 {% endblock %}
