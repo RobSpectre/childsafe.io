@@ -20,8 +20,8 @@ class TestMediaTasks(TestCase):
                                                   resource_id="derp")
 
     @responses.activate
-    @patch('media.tasks.scan_mediaitem.apply_async')
-    def test_scan_mediaitem_on_tellfinder(self, mock_scan):
+    @patch('media.tasks.notify_match.apply_async')
+    def test_scan_mediaitem_on_tellfinder(self, mock_notify):
         responses.add(responses.GET,
                       "https://example.com/stuff.png",
                       content_type="image/png",
@@ -40,4 +40,4 @@ class TestMediaTasks(TestCase):
         matches = Match.objects.all()
 
         self.assertEquals(len(matches), 1)
-        self.assertFalse(mock_scan.called)
+        self.assertTrue(mock_notify.called)
