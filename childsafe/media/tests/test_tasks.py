@@ -12,13 +12,14 @@ import media.tasks
 @override_settings(TELLFINDER_API_KEY="xxxx",
                    PHOTODNA_API_KEY="yyyy")
 class TestMediaTasks(TestCase):
-    def setUp(self):
+    @patch('media.tasks.scan_mediaitem.apply_async')
+    def setUp(self, mock_scan):
         self.mediaitem = MediaItem.objects.create(url="https://example.com/"
                                                   "stuff.png",
                                                   resource_id="derp")
 
-    @patch('media.tasks.scan_mediaitem.apply_async')
     @responses.activate
+    @patch('media.tasks.scan_mediaitem.apply_async')
     def test_scan_mediaitem_on_tellfinder(self, mock_scan):
         responses.add(responses.GET,
                       "https://example.com/stuff.png",
@@ -31,7 +32,9 @@ class TestMediaTasks(TestCase):
                       json={"similarUrls": ["https://backderp.com/derp.jpg"]},
                       status=200)
 
-        test = media.tasks.scan_mediaitem_on_tellfinder(self.mediaitem.id)
+        media.tasks.scan_mediaitem_on_tellfinder(self.mediaitem.id)
 
-        self.assertTrue(test)
+        test_item = MediaItem.objects.get(id=self.mediaitem.id)
+
+        self.assertTrue(test_item.positive)
         self.assertTrue(mock_scan.called)

@@ -16,6 +16,10 @@ def scan_mediaitem(id):
     scan_mediaitem_on_clarifai_nsfw.apply_async(args=[id])
     scan_mediaitem_on_clarifai_moderation.apply_async(args=[id])
 
+    mediaitem = MediaItem.objects.get(id=id)
+    mediaitem.status = "scanning"
+    mediaitem.save()
+
     return id
 
 

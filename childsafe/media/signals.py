@@ -10,7 +10,4 @@ def scan_media_item(sender, instance, **kwargs):
     if instance.status == "received":
         scan_mediaitem.apply_async(args=[instance.id])
 
-        instance.status = "scanning"
-        instance.save()
-
     return instance
