@@ -1,44 +1,63 @@
 'use strict'
 
 const querystring = require('querystring')
-const http = require('http')
+const https = require('https')
+const runtimeConfig = require('cloud-functions-runtime-config')
 
 exports.childSafe = function(event, callback) {
-  const file = event.data
-  const url = file.mediaLink
-  const resource_id = event.id
+  runtimeConfig
+    .getVariable('childsafe-runtime-config', 'childsafe_user_id')
+    .then(user_id => {
+      console.log('event', event)
+      const file = event.data
+      const url = file.mediaLink
+      const resource_id = event.resource
 
-  const postData = querystring.stringify({ url, resource_id })
+      const postData = querystring.stringify({ url, resource_id, user_id })
 
-  console.log('File uploaded: ' + url)
+      console.log('postData', postData)
 
-  const options = {
-    hostname: 'tunnel.brooklynhacker.com',
-    path: '/receive/media/',
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Content-Length': postData.length
-    }
-  }
+      console.log('File uploaded: ' + url)
 
-  const req = http.request(options, res => {
-    let body = ''
+      const options = {
+        hostname: 'childsafe.io',
+        path: '/receive/media/',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Length': postData.length
+        }
+      }
 
-    if (res.statusCode !== 201) {
-      console.error(`status code: ${res.statusCode}`)
-    }
+      const req = https.request(options, res => {
+        let body = ''
 
-    res.on('data', chunk => {
-      body += chunk
+        if (res.statusCode !== 201) {
+          const err = new Error(`status code: ${res.statusCode}`)
+          console.error(err)
+          return callback(err)
+        }
+
+        res.on('error', err => {
+          console.error(err)
+          return callback(err)
+        })
+
+        res.on('data', chunk => {
+          body += chunk
+        })
+
+        res.on('end', () => {
+          console.log(body)
+          callback()
+        })
+      })
+
+      req.write(postData)
+      req.end()
     })
-
-    res.on('end', ()=> {
-      console.log(body)
-      callback()
+    .catch(err => {
+      console.error(err)
+      return callback(err)
     })
-  })
-
-  req.write(postData)
-  req.end()
 }

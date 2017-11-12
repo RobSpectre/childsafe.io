@@ -1,9 +1,11 @@
 'use strict'
 
-const http = require('http')
+const https = require('https')
 const querystring = require('querystring')
 
-// const CHILD_SAFE_URL = process.env.CHILD_SAFE_URL
+const CHILD_SAFE_USER_ID = process.env.CHILD_SAFE_USER_ID
+
+console.log('Function loaded')
 
 exports.handler = (event, context, callback) => {
   const promises = event.Records.map(record => {
@@ -13,10 +15,14 @@ exports.handler = (event, context, callback) => {
       const resource_id = `${record.s3.bucket.arn}/${key}`
       const url = `https://s3.amazonaws.com/${bucket}/${key}`
 
-      const postData = querystring.stringify({ url, resource_id })
+      const postData = querystring.stringify({
+        url,
+        resource_id,
+        user_id: CHILD_SAFE_USER_ID
+      })
 
       const options = {
-        hostname: 'tunnel.brooklynhacker.com',
+        hostname: 'childsafe.io',
         path: '/receive/media/',
         method: 'POST',
         headers: {
@@ -25,7 +31,7 @@ exports.handler = (event, context, callback) => {
         }
       }
 
-      const req = http.request(options, res => {
+      const req = https.request(options, res => {
         let body = ''
 
         if (res.statusCode !== 201) {
@@ -38,7 +44,10 @@ exports.handler = (event, context, callback) => {
           body += chunk
         })
 
-        res.on('end', () => resolve(body))
+        res.on('end', () => {
+          console.log(body)
+          resolve(body)
+        })
       })
 
       req.write(postData)

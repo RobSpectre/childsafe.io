@@ -1,0 +1,26 @@
+# vi: ft=yaml
+
+resources:
+  - name: childsafe-runtime-config
+    type: runtimeconfig.v1beta1.config
+    properties:
+      config: childsafe-runtime-config
+      description: Holds your ChildSafe user_id
+
+  - name: childsafe-runtime-variable-childsafe-user-id
+    type: runtimeconfig.v1beta1.variable
+    properties:
+      parent: $(ref.childsafe-runtime-config.name)
+      variable: childsafe_user_id
+      text: {{ properties['child_safe_user_id'] }}
+
+  - name: childsafe-cloud-function
+    type: cloudfunctions.v1beta2.function
+    properties:
+      location: us-central1
+      function: send-to-childsafe-function
+      entryPoint: childSafe
+      sourceArchiveUrl: gs://childsafe-stage.doesnotscale.com/gcf.zip
+      eventTrigger:
+        eventType: providers/cloud.storage/eventTypes/object.change
+        resource: {{ properties['bucket-name'] }}
