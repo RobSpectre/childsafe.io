@@ -1,0 +1,17 @@
+{
+  "name": "cloud_function",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "zip": "npm run clean && zip -r gcf.zip index.js package.json node_modules",
+    "clean": "rm -rf gcf.zip",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "cloud-functions-runtime-config": "^0.1.1"
+  }
+}
