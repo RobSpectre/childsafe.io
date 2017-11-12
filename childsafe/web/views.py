@@ -53,12 +53,14 @@ def profile(request):
 
     if request.method == 'POST':
         if request.POST.get("form") == "notifications":
-            user.childsafeuser.sms_notifications = request.POST.get("smsNotifications")
-            user.childsafeuser.email_notifications = request.POST.get("emailNotifications")
-            user.childsafeuser.phone_notifications = request.POST.get("phoneNotifications")
+            user.childsafeuser.sms_notifications = \
+                request.POST.get("smsNotifications")
+            user.childsafeuser.email_notifications = \
+                request.POST.get("emailNotifications")
+            user.childsafeuser.phone_notifications = \
+                request.POST.get("phoneNotifications")
             user.save()
             user.refresh_from_db()
- 
     context = {
         "user": user
     }
