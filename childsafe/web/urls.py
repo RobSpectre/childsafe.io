@@ -12,5 +12,5 @@ urlpatterns = [
     url(r'^docs/$', views.docs_index, name='docs_index'),
     url(r'^docs/aws-s3$', views.docs_aws, name='docs_aws'),
     url(r'^docs/google-cloud-storage$', views.docs_gcs, name='docs_gcs'),
-    url(r'^docs/azure$', views.docs_azure, name='doc_azure'),
+    url(r'^docs/azure$', views.docs_azure, name='docs_azure'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

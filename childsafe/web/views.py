@@ -66,4 +66,3 @@ def docs_azure(request):
 @login_required(login_url='/login/')
 def profile(request):
     return render(request, 'web/profile.html')
-
