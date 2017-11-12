@@ -15,8 +15,6 @@ class TestMediaTasks(TestCase):
                                                   "stuff.png",
                                                   resource_id="derp")
 
-        self.hash = "76ae11e092e5f88d9ab829852119fc64849f070d"
-
     @responses.activate
     def test_scan_mediaitem_on_tellfinder(self):
         responses.add(responses.GET,
@@ -25,8 +23,8 @@ class TestMediaTasks(TestCase):
                       body=open('media/tests/assets/example.png', 'rb'),
                       status=200)
 
-        responses.add(responses.GET,
-                      "https://api.tellfinder.com/image/{0}".format(self.hash),
+        responses.add(responses.POST,
+                      "https://api.tellfinder.com/similarimages",
                       json={"total": 5},
                       status=200)
 

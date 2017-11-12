@@ -143,4 +143,4 @@ def send_sms_notification(report):
                                      to=mediaitem.user.phone_number,
                                      body=body)
 
-    return body 
+    return body
