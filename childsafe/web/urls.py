@@ -7,7 +7,8 @@ from . import views
 urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^signup/', views.signup, name='signup'),
-    url(r'^login/', views.login_page, name='login'),
+    url(r'^login/', views.login_view, name='login'),
+    url(r'^logout/', views.logout_view, name='logout'),
     url(r'^user/profile/', views.profile, name='profile'),
     url(r'^docs/$', views.docs_index, name='docs_index'),
     url(r'^docs/aws-s3$', views.docs_aws, name='docs_aws'),

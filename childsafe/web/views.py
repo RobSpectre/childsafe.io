@@ -1,4 +1,4 @@
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
@@ -37,7 +37,7 @@ def signup(request):
                   {'form': form})
 
 
-def login_page(request):
+def login_view(request):
     if request.method == 'POST':
         user = authenticate(username=request.POST.get("username", ""),
                             password=request.POST.get("password", ""))
@@ -63,6 +63,26 @@ def docs_azure(request):
     return render(request, 'web/docs/azure.html')
 
 
+def logout_view(request):
+    logout(request)
+    return redirect('index')
+
+
 @login_required(login_url='/login/')
 def profile(request):
-    return render(request, 'web/profile.html')
+    user = request.user
+
+    if request.method == 'POST':
+        if request.POST.get("form") == "notifications":
+            user.childsafeuser.sms_notifications = \
+                request.POST.get("smsNotifications")
+            user.childsafeuser.email_notifications = \
+                request.POST.get("emailNotifications")
+            user.childsafeuser.phone_notifications = \
+                request.POST.get("phoneNotifications")
+            user.save()
+            user.refresh_from_db()
+    context = {
+        "user": user
+    }
+    return render(request, 'web/profile.html', context)
