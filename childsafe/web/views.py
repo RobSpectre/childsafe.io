@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
 from .forms import SignUpForm
+from .models import ChildsafeUser
 
 
 def index(request):
@@ -19,6 +20,13 @@ def signup(request):
             user.email = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
             user.save()
+            childsafeUser = ChildsafeUser.objects.create(user=user)
+            childsafeUser.first_name = user.first_name
+            childsafeUser.last_name = user.last_name
+            childsafeUser.organization = form.cleaned_data.get('organization')
+            childsafeUser.email_address = form.cleaned_data.get('username')
+            childsafeUser.phone_number = form.cleaned_data.get('phone_number')
+            childsafeUser.save()
             user = authenticate(username=user.username, password=raw_password)
             login(request, user)
             return redirect('profile')
