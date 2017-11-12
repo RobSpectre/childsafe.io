@@ -16,7 +16,7 @@
                   <a class="js-go-to d-block g-color-white g-bg-primary--hover g-font-weight-600 g-font-size-12 text-uppercase g-text-underline--none--hover rounded g-px-20 g-py-15" href="#" data-target="#id">1. Paste your childsafe.io ID</a>
                 </li>
                 <li class="g-bg-gray-dark-v2 g-px-20">
-                  <a class="js-go-to d-block g-color-white g-bg-primary--hover g-font-weight-600 g-font-size-12 text-uppercase g-text-underline--none--hover rounded g-px-20 g-py-15" href="#" data-target="#function">2. Create a lamda function</a>
+                  <a class="js-go-to d-block g-color-white g-bg-primary--hover g-font-weight-600 g-font-size-12 text-uppercase g-text-underline--none--hover rounded g-px-20 g-py-15" href="#" data-target="#function">2. Create a lambda function</a>
                 </li>
                 <li class="g-bg-gray-dark-v2 g-px-20">
                   <a class="js-go-to d-block g-color-white g-bg-primary--hover g-font-weight-600 g-font-size-12 text-uppercase g-text-underline--none--hover rounded g-px-20 g-py-15" href="#" data-target="#trigger">3. Set an S3 Trigger</a>
@@ -31,8 +31,7 @@
             <div id="overview" class="u-shadow-v19 g-bg-white rounded g-pa-40 g-mb-50">
               <h2 class="h3 g-color-black mb-3">Setup childsafe.io on AWS S3</h2>
               <div class="d-inline-block g-width-50 g-height-2 g-bg-black mb-3"></div>
-              <p>Run <a href="https://console.aws.amazon.com/cloudformation/home#/stacks/new?stackName=childsafe-io&templateURL=https:%2F%2Fs3.amazonaws.com%2Fchildsafe.eddiezane.com%2Ftemplate.yml">this Cloud Formation Template</a> to make your site childsafe in <strong>less than three minutes</strong>. Watch this video to see the whole process from beginning to end.</p>
-
+              <p>If you use Amazon Web Services S3 to store user generated content, you can make your site childsafe in less than five minutes. Watch this video to see the whole process from beginning to end.</p>
               <video controls>
                 <source src="{% static '/video/aws.mp4' %}" type="video/mp4">
                 Your browser does not support the video tag.
@@ -44,10 +43,15 @@
             <div id="id" class="u-shadow-v19 g-bg-white rounded g-pa-40 g-mb-50">
               <h3 class="g-color-black mb-3">Paste your childsafe.io ID</h3>
               <div class="d-inline-block g-width-50 g-height-2 g-bg-black mb-3"></div>
-              <p>We're going to set up a lamda function that will send a POST request to childsafe.io whenever a new image is uploaded to your S3 bucket. Included in that post request will be a image URL, a resource ID, and your childsafe.io user ID. </p>
+              <p>We're going to set up a lambda function that will send a POST request to childsafe.io whenever a new image is uploaded to your S3 bucket. Included in that post request will be a image URL, a resource ID, and your childsafe.io user ID. </p>
 
-              <p>To get started, copy your childsafe.io ID from your user profile. Then run <a href="https://console.aws.amazon.com/cloudformation/home#/stacks/new?stackName=childsafe-io&templateURL=https:%2F%2Fs3.amazonaws.com%2Fchildsafe.eddiezane.com%2Ftemplate.yml">this Cloud Formation Template</a>, click Next, and then paste your childsafe.io ID into the text box. Then click Next again.</p>
-
+              <ul>
+                <li>Go to your <a href="/user/profile">user profile page</a> and copy your childsafe.io ID</li>
+                <li>Run <a href="https://console.aws.amazon.com/cloudformation/home#/stacks/new?stackName=childsafe-io&templateURL=https:%2F%2Fs3.amazonaws.com%2Fchildsafe.eddiezane.com%2Ftemplate.yml">this Cloud Formation Template</a></li>
+                <li>Click Next</li>
+                <li>Paste your childsafe.io ID into the text box</li>
+                <li>Click Next</li>
+              </ul>
               <img src="{% static '/img/docs/gcs-paste.png' %}" />
 
             </div>
@@ -55,10 +59,17 @@
 
             <!-- ID -->
             <div id="function" class="u-shadow-v19 g-bg-white rounded g-pa-40 g-mb-50">
-              <h3 class="g-color-black mb-3">Create a lamda function</h3>
+              <h3 class="g-color-black mb-3">Create a lambda function</h3>
               <div class="d-inline-block g-width-50 g-height-2 g-bg-black mb-3"></div>
-              <p>No further customization is needed after you've added your childsafe ID. Just click next, acknowledge the terms and conditions, create your platform, and execute. You may need to refresh a couple times while waiting for your function to be created.</p>
+              <p>Now that you've pasted in your childsafe.io ID, you'll need to create your AWS platform and lambda function.</p>
+              <ul>
+                <li>Click next</li>
+                <li>Check the two boxes to acknowledge the terms and conditions</li>
+                <li>Click <strong>Create change set</strong></li>
+                <li>Click execute</li>
+                <li><strong>Refresh</strong> a couple times until you see the lambda function appear</li>
 
+              </ul>
               <img src="{% static '/img/docs/gcs-function.gif' %}" />
 
             </div>
@@ -69,7 +80,16 @@
               <h3 class="g-color-black mb-3">Set an S3 Trigger</h3>
               <div class="d-inline-block g-width-50 g-height-2 g-bg-black mb-3"></div>
               <p>
-                Once your function is created, click *Triggers* and select S3 as the triggering integration. Choose the bucket user generated content is stored in, and select *Object Created (All)* as the *Event Type*. Click next.
+                Once your function is created (you may need to refresh to see it):
+                <ul>
+                  <li>Click <strong>Resources</strong></li>
+                  <li>Click your Lambda Function (it's probably the top one)</li>
+                  <li>Click <strong>Triggers</strong> in the top-middle</li>
+                  <li>Click the empty box and select S3</li>
+                  <li>Select your S3 bucket</li>
+                  <li>Select <strong>Object Created (All)</strong> as the <strong>Event Type</strong></li>
+                  <li>Click Next</li>
+                </ul>
               </p>
 
               <p>Your site is now childsafe.</p>
