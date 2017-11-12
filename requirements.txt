@@ -6,3 +6,4 @@ django-celery-results==1.0.1
 djangorestframework==3.7.3
 markdown==2.6.9
 django-filter==1.1.0
+clarifai==2.0.32
