@@ -8,6 +8,7 @@ from clarifai.rest import ClarifaiApp
 from twilio.rest import Client
 
 from .models import MediaItem
+from .models import Match
 
 
 @shared_task
@@ -44,10 +45,17 @@ def scan_mediaitem_on_photodna(id):
         if response_json['Status'].get('Code', None) == 3000:
             mediaitem.status = 'completed'
             mediaitem.scanned = True
-            mediaitem.positive = response_json['IsMatch']
-            mediaitem.save()
+            if response_json['IsMatch']:
+                match = Match(resource_id=mediaitem.resource_id,
+                              url=mediaitem.url,
+                              risk="Child Pornography",
+                              user=mediaitem.user,
+                              mediaitem=mediaitem)
+                match.save()
     else:
         return response.status_code
+
+    return response_json
 
 
 @shared_task
@@ -64,13 +72,13 @@ def scan_mediaitem_on_tellfinder(id):
         results_json = results.json()
 
         if results_json.get("similarUrls", None):
-            mediaitem.positive = True
+            match = Match(resource_id=mediaitem.resource_id,
+                          url=mediaitem.url,
+                          risk="Human Trafficking",
+                          user=mediaitem.user,
+                          mediaitem=mediaitem)
+            match.save()
 
-        mediaitem.scanned = True
-        mediaitem.save()
-    elif results.status_code == 404:
-        mediaitem.scanned = True
-        mediaitem.save()
     else:
         return results.status_code
 
@@ -90,13 +98,15 @@ def scan_mediaitem_on_clarifai_nsfw(id):
         for output in result['outputs']:
             if output.get('data', None):
                 for concept in output['data']['concepts']:
-                    if concept['name'] == 'nsfw' and concept['value'] >= 0.60:
-                        mediaitem.positive = True
+                    if concept['name'] == 'nsfw' and concept['value'] >= 0.70:
+                        match = Match(resource_id=mediaitem.resource_id,
+                                      url=mediaitem.url,
+                                      risk="NSFW",
+                                      user=mediaitem.user,
+                                      mediaitem=mediaitem)
+                        match.save()
     else:
         return {"error": "Clarifai Failure", "result": result}
-
-    mediaitem.scanned = True
-    mediaitem.save()
 
     return result
 
@@ -117,34 +127,36 @@ def scan_mediaitem_on_clarifai_moderation(id):
                     if concept['name'] == 'safe':
                         continue
 
-                if concept['value'] >= 0.60:
-                    mediaitem.positive = True
+                    if concept['value'] >= 0.70:
+                        match = Match(resource_id=mediaitem.resource_id,
+                                      url=mediaitem.url,
+                                      risk="Graphic Content",
+                                      user=mediaitem.user,
+                                      mediaitem=mediaitem)
+                        match.save()
     else:
         return {"error": "Clarifai Failure", "result": result}
-
-    mediaitem.scanned = True
-    mediaitem.save()
 
     return result
 
 
 @shared_task
-def send_sms_notification(report):
+def notify_match(id):
+    match = Match.objects.get(id=id)
+
     client = Client(settings.TWILIO_ACCOUNT_SID,
                     settings.TWILIO_AUTH_TOKEN)
 
-    mediaitem = MediaItem.objects.get(id=report['mediaitem_id'])
-
     body = "[Alert from childsafe.io]\n" \
-           "Match Type: {0}\n" \
+           "Risk: {0}\n" \
            "Resource ID: {1}\n" \
            "URI: {2}" \
-           "".format(report['match_type'],
-                     report['resource_id'],
-                     report['url'])
+           "".format(match.risk,
+                     match.resource_id,
+                     match.url)
 
-    message = client.messages.create(from_=settings.TWILIO_PHONE_NUMBER,
-                                     to=mediaitem.user.phone_number,
-                                     body=body)
+    client.messages.create(from_=settings.TWILIO_PHONE_NUMBER,
+                           to=match.user.phone_number,
+                           body=body)
 
     return body

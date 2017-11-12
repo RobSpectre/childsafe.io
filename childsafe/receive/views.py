@@ -26,9 +26,6 @@ class MediaItemSerializer(serializers.ModelSerializer):
                   'resource_id',
                   'url',
                   'status',
-                  'scanned',
-                  'positive',
-                  'alerted',
                   'user',
                   'user_id')
 

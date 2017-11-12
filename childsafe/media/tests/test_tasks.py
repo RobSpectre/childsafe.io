@@ -6,6 +6,7 @@ from django.test import override_settings
 import responses
 
 from media.models import MediaItem
+from media.models import Match
 import media.tasks
 
 
@@ -36,5 +37,7 @@ class TestMediaTasks(TestCase):
 
         test_item = MediaItem.objects.get(id=self.mediaitem.id)
 
-        self.assertTrue(test_item.positive)
-        self.assertTrue(mock_scan.called)
+        matches = Match.objects.all()
+
+        self.assertEquals(len(matches), 1)
+        self.assertFalse(mock_scan.called)
