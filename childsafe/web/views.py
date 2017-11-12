@@ -1,4 +1,4 @@
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
@@ -37,7 +37,7 @@ def signup(request):
                   {'form': form})
 
 
-def login_page(request):
+def login_view(request):
     if request.method == 'POST':
         user = authenticate(username=request.POST.get("username", ""),
                             password=request.POST.get("password", ""))
@@ -45,6 +45,11 @@ def login_page(request):
         if user is not None:
             return redirect('profile')
     return render(request, 'web/login.html')
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('index')
 
 
 @login_required(login_url='/login/')
