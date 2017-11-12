@@ -1,3 +1,5 @@
+from mock import patch
+
 from django.test import TestCase
 from django.test import override_settings
 
@@ -15,8 +17,9 @@ class TestMediaTasks(TestCase):
                                                   "stuff.png",
                                                   resource_id="derp")
 
+    @patch('media.tasks.scan_mediaitem.apply_async')
     @responses.activate
-    def test_scan_mediaitem_on_tellfinder(self):
+    def test_scan_mediaitem_on_tellfinder(self, mock_scan):
         responses.add(responses.GET,
                       "https://example.com/stuff.png",
                       content_type="image/png",
@@ -25,9 +28,10 @@ class TestMediaTasks(TestCase):
 
         responses.add(responses.POST,
                       "https://api.tellfinder.com/similarimages",
-                      json={"total": 5},
+                      json={"similarUrls": ["https://backderp.com/derp.jpg"]},
                       status=200)
 
         test = media.tasks.scan_mediaitem_on_tellfinder(self.mediaitem.id)
 
         self.assertTrue(test)
+        self.assertTrue(mock_scan.called)
