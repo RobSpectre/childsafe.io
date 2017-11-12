@@ -6,6 +6,7 @@ from django.test import override_settings
 import responses
 
 from media.models import MediaItem
+from media.models import Match
 import media.tasks
 
 
@@ -19,8 +20,8 @@ class TestMediaTasks(TestCase):
                                                   resource_id="derp")
 
     @responses.activate
-    @patch('media.tasks.scan_mediaitem.apply_async')
-    def test_scan_mediaitem_on_tellfinder(self, mock_scan):
+    @patch('media.tasks.notify_match.apply_async')
+    def test_scan_mediaitem_on_tellfinder(self, mock_notify):
         responses.add(responses.GET,
                       "https://example.com/stuff.png",
                       content_type="image/png",
@@ -36,5 +37,7 @@ class TestMediaTasks(TestCase):
 
         test_item = MediaItem.objects.get(id=self.mediaitem.id)
 
-        self.assertTrue(test_item.positive)
-        self.assertTrue(mock_scan.called)
+        matches = Match.objects.all()
+
+        self.assertEquals(len(matches), 1)
+        self.assertTrue(mock_notify.called)
