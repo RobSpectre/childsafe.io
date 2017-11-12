@@ -17,6 +17,10 @@ class ChildsafeUser(models.Model):
     phone_number = models.CharField(max_length=255, null=True, blank=True)
     webhook_url = models.URLField(null=True, blank=True)
 
+    email_notifications = models.BooleanField(default=True)
+    sms_notifications = models.BooleanField(default=True)
+    phone_notifications = models.BooleanField(default=False)
+
     def __str__(self):
         return "{0}: {1} {2}".format(self.id,
                                      self.first_name,
