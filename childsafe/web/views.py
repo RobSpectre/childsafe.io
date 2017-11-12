@@ -47,6 +47,22 @@ def login_view(request):
     return render(request, 'web/login.html')
 
 
+def docs_index(request):
+    return render(request, 'web/docs/index.html')
+
+
+def docs_aws(request):
+    return render(request, 'web/docs/aws-s3.html')
+
+
+def docs_gcs(request):
+    return render(request, 'web/docs/google-cloud-storage.html')
+
+
+def docs_azure(request):
+    return render(request, 'web/docs/azure.html')
+
+
 def logout_view(request):
     logout(request)
     return redirect('index')
@@ -70,7 +86,3 @@ def profile(request):
         "user": user
     }
     return render(request, 'web/profile.html', context)
-
-
-def documentation(request):
-    return render(request, 'web/documentation.html')
