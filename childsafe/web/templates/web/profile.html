@@ -495,9 +495,17 @@
         copyText.select();
         document.execCommand("Copy");
         var span = document.createElement("span");
+        span.setAttribute("id", "copySpan");
         var node = document.createTextNode("Copied!");
         span.appendChild(node);
         copyText.parentNode.insertBefore(span, copyText.nextSibling);
+        setTimeout(
+          function(){ 
+            copySpan = document.getElementById("copySpan");
+            copySpan.outerHTML = "";
+            delete copySpan; 
+          }, 1000
+        );
       }
     </script>
 {% endblock %}
